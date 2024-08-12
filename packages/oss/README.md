@@ -1,142 +1,98 @@
-# ☁️ Upyun SDK for nest.js
+# ☁️ ali-oss SDK for nest.js
 
-A upyun sdk for nest.js.
+A aliyun OSS SDK for nest.js.
 
 ## Installation
 
 ```bash
-pnpm i @nailyjs.nest.modules/upyun
+pnpm i @nailyjs.nest.modules/ali-oss
 ```
 
 ## Usage
 
 ```typescript
 import { Module } from '@nestjs/common';
-import { UpyunModule } from '@nailyjs.nest.modules/upyun';
+import { AliOSSModule } from '@nailyjs.nest.modules/ali-oss';
 
 @Module({
   imports: [
-    UpyunModule.forRoot({
-      operator: 'operator',
-      password: 'password',
-      bucket: 'bucket',
-      domain: 'domain',
-    }),
+    AliOSSModule.forRoot(/* options */),
   ],
 })
 export class AppModule {}
 ```
 
-## Async Usage
-
-`UpyunModule` provide `forRoot` and `forRootAsync` methods to create upyun client.
+You can also use `AliOSSModule.forRootAsync` to provide options asynchronously.
 
 ```typescript
 import { Module } from '@nestjs/common';
-import { UpyunModule } from '@nailyjs.nest.modules/upyun';
+import { AliOSSModule } from '@nailyjs.nest.modules/ali-oss';
 
 @Module({
   imports: [
-    UpyunModule.forRootAsync({
-      useFactory: () => ({
-        operator: 'operator',
-        password: 'password',
-        bucket: 'bucket',
-      }),
+    AliOSSModule.forRootAsync({
+      useFactory: () => ({/* options */}),
     }),
   ],
 })
 export class AppModule {}
 ```
 
-## Use `UpyunService`
-
-Then you can use `UpyunService` in your service or controller.
+Then you can use `AliOSSService` to upload files.
 
 ```typescript
 import { Injectable } from '@nestjs/common';
-import { UpyunService } from '@nailyjs.nest.modules/upyun';
+import { AliOSSService } from '@nailyjs.nest.modules/ali-oss';
 
 @Injectable()
 export class AppService {
-  constructor(private readonly upyunService: UpyunService) {}
-
-  async upload() {
-    return this.upyunService.listDir('/');
-  }
+  constructor(private readonly aliOSSService: AliOSSService) {}
 }
 ```
 
-## Multiple Upyun Instances
+## Multiple AliOSS Instances
+
+You can create multiple AliOSS instances with different configurations.
 
 ```typescript
 import { Module } from '@nestjs/common';
-import { UpyunModule } from '@nailyjs.nest.modules/upyun';
-
-// In real project, recommend to create a separate file to store constants.
-export const UPYUN_CLIENT_1 = 'upyun1';
-export const UPYUN_CLIENT_2 = 'upyun2';
+import { AliOSSModule } from '@nailyjs.nest.modules/ali-oss';
 
 @Module({
   imports: [
-    UpyunModule.forRoot([
+    AliOSSModule.forRoot([
       {
-        provide: UPYUN_CLIENT_1,
-        operator: 'operator1',
-        password: 'password1',
-        bucket: 'bucket1',
+        provide: 'AliOSSInstanceName1',
+        /* options */
       },
       {
-        name: UPYUN_CLIENT_2,
-        operator: 'operator2',
-        password: 'password2',
-        bucket: 'bucket2',
-      },
-    ])
+        provide: 'AliOSSInstanceName2',
+        /* options */
+      }
+    ]),
   ],
 })
 export class AppModule {}
 ```
 
-> Also you can use `forRootAsync` to create multiple upyun instances.
-
-Then you must use `@Inject` decorator (import from `@nestjs/common`) to inject the service.
+Then you can use `AliOSSService` with a specific name.
 
 ```typescript
 import { Injectable, Inject } from '@nestjs/common';
-import { UpyunService } from '@nailyjs.nest.modules/upyun';
-import { UPYUN_CLIENT_1, UPYUN_CLIENT_2 } from './app.module';
+import { AliOSSService } from '@nailyjs.nest.modules/ali-oss';
 
 @Injectable()
 export class AppService {
   constructor(
-    @Inject(UPYUN_CLIENT_1)
-    private readonly upyunService1: UpyunService,
-    @Inject(UPYUN_CLIENT_2)
-    private readonly upyunService2: UpyunService,
+    @Inject('AliOSSInstanceName1') private readonly aliOSSService1: AliOSSService,
+    @Inject('AliOSSInstanceName2') private readonly aliOSSService2: AliOSSService,
   ) {}
-
-  async upload() {
-    return this.upyunService1.listDir('/');
-  }
 }
 ```
 
-## FAQ
-
-### Why I not have types for upyun sdk?
-
-Upyun sdk is written in javascript, but you can use `@types/upyun` to get types.
-
-```bash
-pnpm i -D @types/upyun
-```
-
-> The author of `@types/upyun` is also me (QAQ)
-
 ## Author
 
-👤 **Naily Zero** <zero@naily.cc>
+👤 **Naily Zero**
 
 ## License
 

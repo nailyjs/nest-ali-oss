@@ -41,6 +41,8 @@ export class AliOSSModule {
     return {
       module: AliOSSModule,
       providers,
+      global: true,
+      exports: providers,
     }
   }
 
@@ -71,6 +73,8 @@ export class AliOSSModule {
     return {
       module: AliOSSModule,
       providers,
+      global: true,
+      exports: providers,
     }
   }
 }
