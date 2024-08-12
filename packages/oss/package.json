@@ -1,0 +1,53 @@
+{
+  "name": "@nailyjs.nest.modules/ali-oss",
+  "version": "1.0.0",
+  "description": "🍿️ Nest.js aliyun oss module",
+  "author": {
+    "name": "Zero",
+    "email": "zero@naily.cc",
+    "url": "https://github.com/groupguanfang"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/nailyjs/nest-ali-oss",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nailyjs/nest-ali-oss.git"
+  },
+  "bugs": {
+    "email": "zero@naily.cc",
+    "url": "https://github.com/nailyjs/nest-ali-oss/issues"
+  },
+  "keywords": [
+    "nestjs",
+    "aliyun",
+    "oss"
+  ],
+  "main": "lib/cjs/index.js",
+  "module": "lib/esm/index.js",
+  "types": "lib/types/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "engines": {
+    "node": ">=12"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && rollup -c rollup.config.mjs",
+    "prepublishOnly": "npm run build"
+  },
+  "publishConfig": {
+    "access": "public",
+    "tag": "latest",
+    "registry": "https://registry.npmjs.org"
+  },
+  "dependencies": {
+    "@naiable/utils": "^0.0.6",
+    "@nestjs/common": "^10.3.1",
+    "@types/ali-oss": "6.16.11",
+    "ali-oss": "^6.20.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.6",
+    "typescript": "^5.3.3"
+  }
+}
