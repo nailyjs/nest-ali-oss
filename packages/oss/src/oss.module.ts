@@ -1,6 +1,6 @@
 import type { DynamicModule, InjectionToken, Provider } from '@nestjs/common'
 import { Module } from '@nestjs/common'
-import * as OSS from 'ali-oss'
+import OSS from 'ali-oss'
 import { AliOSSService } from './oss.service'
 
 export interface AliOSSMultipleOptions extends OSS.Options {
